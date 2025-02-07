@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[16]:
+# In[1]:
 
 
 from astropy.table import Table
@@ -38,8 +38,8 @@ ri1 = r1 - i1
 #LB calculating extinction
 ebv1 = sfd(quasar1)
 A1 = ebv1*ugriz
-gr1c = A1[1] - A1[2]
-ri1c = A1[2] - A1[3]
+gr1c = (g1-A1[1]) - (r1-A1[2])
+ri1c = (r1-A1[2]) - (i1-A1[3])
 
 # LB inputting info about quasar #2, RA, Dec, colors
 quasar2 = SkyCoord(236.562 * u.deg, 2.440 * u.deg).galactic
@@ -52,8 +52,8 @@ ri2 = r2 - i2
 # LB calculating extinction
 ebv2 = sfd(quasar2)
 A2 = ebv2 * ugriz
-gr2c = A2[1] - A2[2]
-ri2c = A2[2] - A2[3]
+gr2c = (g2-A2[1]) - (r2-A2[2])
+ri2c = (r2-A2[2]) - (i2-A2[3])
 
 # LB plotting g-r and r-i for the two quasars
 plt.figure(figsize=(17,10))
