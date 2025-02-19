@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[118]:
+# In[131]:
 
 
 from astropy.table import Table
@@ -68,16 +68,23 @@ def writetopolygon(RA, Dec, theta):
     file = open('sphericalcaps.txt','w')
     with open('sphericalcaps.txt', 'w') as file:
         
-        file.write(f'''1 polygons
-        polygon 1 ( 3 caps, 1 weight, 0 pixel, 0 str):
-        {RAvector4arr(RA)}
-        {Decvector4arr(Dec)}
-        {RADecvector4arr(RA,Dec,theta)}''')
+        file.write('1 polygons\n') 
+        file.write('polygon 1 ( 3 caps, 1 weight, 0 pixel, 0 str):\n')
+        file.write(f' {RAvector4arr(RA)}\n')
+        file.write(f' {Decvector4arr(Dec)}\n')
+        file.write(f' {RADecvector4arr(RA,Dec,theta)}\n')
         
 # LB testing functions
 RAvector4arr(5)
 Decvector4arr(36)
 RADecvector4arr(5,36,1)
+writetopolygon(5,36,1)
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
