@@ -33,7 +33,7 @@ def RAvector4arr(RA):
     x = c1.x.value
     y = c1.y.value
     z = c1.z.value
-    return f'{x}, {y}, {z}, {h1}'
+    return f'{x} {y} {z} {h1}'
 
 
 
@@ -46,7 +46,7 @@ def Decvector4arr(Dec):
     x = c1.x.value
     y = c1.y.value
     z = c1.z.value
-    return f'{x}, {y}, {z}, {h1}'
+    return f'{x} {y} {z} {h1}'
     
 
 
@@ -60,7 +60,7 @@ def RADecvector4arr(RA, Dec,theta):
     x = c1.x.value
     y = c1.y.value
     z = c1.z.value
-    return f'{x}, {y}, {z}, {h1}'
+    return f'{x} {y} {z} {h1}'
 
 
 # LB writing to a file 
@@ -73,6 +73,19 @@ def writetopolygon(RA, Dec, theta):
         file.write(f' {RAvector4arr(RA)}\n')
         file.write(f' {Decvector4arr(Dec)}\n')
         file.write(f' {RADecvector4arr(RA,Dec,theta)}\n')
+        
+# LB writing to a file 
+def writetopolygon12(RA, RA1, Dec, Dec1, filename):
+    file = open(filename,'w')
+    with open(filename, 'w') as file:
+        
+        file.write('1 polygons\n') 
+        file.write('polygon 1 ( 4 caps, 1 weight, 0 pixel, 0 str):\n')
+        file.write(f' {RAvector4arr(RA)}\n')
+        file.write(f' {RAvector4arr(RA1)}\n')
+        file.write(f' {Decvector4arr(Dec)}\n')
+        file.write(f' {Decvector4arr(Dec1)}\n')
+        file.write(f'{((15*RA*np.pi/180)-(15*RA1*15*np.pi/180))*(math.sin(Dec*180/np.pi)-math.sin(Dec1*180/np.pi))}')
         
 # LB testing functions
 RAvector4arr(5)
