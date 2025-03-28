@@ -88,7 +88,7 @@ def make_rectangle(RAmin, RAmax, Decmin, Decmax, color):
     # LB finding the area of the lat-lon rectangle and putting it into a string
     areaf = f'{lat_lon_area(RAmin, RAmax, Decmin, Decmax):.2f}'
     area = str(areaf) + ' square degrees'
-    print(area)
+    #print(area)
     # LB Making the rectangle into a matplotlib patch 
     patch = patches.Rectangle((deg_to_rad(RAmin), deg_to_rad(Decmin)), (math.pi/180)*(RAmax-RAmin), (math.pi/180)*(Decmax-Decmin), edgecolor=cycle[color], facecolor='white', linewidth=2, label=area)
     return patch    
@@ -161,7 +161,7 @@ def random_pop(RAmin, RAmax, Decmin, Decmax, filepath):
     # LB indexing only the points in the box bound by the RA min, RA max, Dec min, and Dec max
     i = (ragen >= deg_to_rad(RAmin)) & (ragen <= deg_to_rad(RAmax)) & (decgen >= deg_to_rad(Decmin)) & (decgen <= deg_to_rad(Decmax))
     # LB printing the ratio of points within the rectangle to the points in the total area to compare to the area difference
-    print(len(ragen[i])/len(ragen))
+    print(f'The fraction of points is {len(ragen[i])/len(ragen)}')
     # LB plotting the random points and overplotting the points in the box in a different color
     ax.scatter(ragen,decgen, color='purple',label='Random points', s=1, marker='*')
     ax.scatter(ragen[i],decgen[i], color='dodgerblue',label='In the lat-lon projection', s=1, marker='*')
@@ -169,26 +169,27 @@ def random_pop(RAmin, RAmax, Decmin, Decmax, filepath):
     ax.grid(color='b', linestyle='dashed', linewidth=1)
     # LB saving figure in the file path specified
     plt.savefig(os.path.join(filepath, 'inside_rect.png'))
-    print(ragen[i],decgen[i])
+    print(f'The RA is {ragen[i]},The Dec is {decgen[i]}')
     return (ragen[i],decgen[i])
 
 if __name__ == "__main__":
-    # LB testing the functions with 0,30,0,15.
-    lat_lon_area(0,30,0,15)
-    plotting(0,30,0,15,'.')
+    # LB uncomment to test the functions with 0,30,0,15.
+    #lat_lon_area(0,30,0,15)
+    #plotting(0,30,0,15,'.')
     random_pop(0,30,0,15,'.')
     # LB comparing to see if the area fraction matches with the point fractions
     fraction = lat_lon_area(0,30,0,15)/(4*np.pi*180*180/np.pi/np.pi)
-    print(fraction)
+    print(f'The fraction of area in the square to total area is {fraction}')
+    print('The fractions are roughly the same')
 
-parser = argparse.ArgumentParser()
-# LB allowing parser so we can input the file path we want to save figures to
-parser.add_argument("filepath", type=str, help="Where would you like to save your figure?")
-args = parser.parse_args()
-FILEPATH = args.filepath
+    parser = argparse.ArgumentParser()
+    # LB allowing parser so we can input the file path we want to save figures to
+    parser.add_argument("filepath", type=str, help="Where would you like to save your figure?")
+    args = parser.parse_args()
+    FILEPATH = args.filepath
 
-plotting(0,30,0,15,FILEPATH)
-random_pop(0,30,0,15,FILEPATH)
+    plotting(0,30,0,15,FILEPATH)
+    random_pop(0,30,0,15,FILEPATH)
 
 
 
