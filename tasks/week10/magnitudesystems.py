@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[7]:
-
-
 from astropy.table import Table
 from astropy.table import QTable
 import astropy.units as u
@@ -19,11 +13,6 @@ import sys
 import os
 
 
-# legacydir = os.getenv("LEGACYDIR")
-# if legacydir is None:
-#     print("Set the LEGACYDIR environment variable to point to the main " +
-#     "LEGACYDIR data directory (e.g.  /d/scratch/ASTR5160/data/legacysurvey/dr9/south/sweep/9.0)")
-
 os.environ['LEGACYDIR']= '/d/scratch/ASTR5160/data/legacysurvey/dr9/south/sweep/9.0'
 legacydir = os.getenv("LEGACYDIR")
 print(legacydir)
@@ -36,7 +25,7 @@ for dirpath,_,filenames in  os.walk(user_dir):
         if name.endswith('.fits'):
             file_list.append(os.path.join(user_dir,dirpath,name))
 
-#print(file_list)
+# LB finding UBVRI to ugriz
 B_V =  0.873
 V = 15.256
 U_B =  0.320
@@ -50,32 +39,9 @@ i =  -1 * (0.91*(R_I) - 0.20 -r)
 z = -1 * (1.72*(R_I) - 0.41 - r)
 print(f'The ugriz is {uu} {g} {r} {i} {z}')
 print('This is close to the values in SDSS, but z differs the most')
-# g_mag = []
-# r_mag = []
-# z_mag = []
-# #print(file_list)
-# for i in file_list:
-#     objs = Table.read(i)
-#     G = objs["FLUX_G"]
-#     R = objs["FLUX_R"]
-#     Z = objs["FLUX_Z"]
-#     print(G)
-#     gm = -22.5 - 2.5 * np.log10(G)
-#     rm = -22.5 - 2.5 * np.log10(R)
-#     zm = -22.5 - 2.5 * np.log10(Z)
-#     g_mag.append(gm)
-#     r_mag.append(rm)
-#     z_mag.append(zm)
-# print(g_mag)
-# os.environ['SDSSDIR']= '/d/scratch/ASTR5160/data/first'
-# sdssdir = os.getenv("SDSSDIR")
-# filename = 'first_08jul16.fits'
-# file = os.path.join(sdssdir, filename)
-# objs = Table.read(file)
-# RA = objs["RA"]
-# Dec = objs["DEC"]
 
 
+# LB making dictionary of the coordinates of PG1633_099A
 bothh = Table({"RA": [248.85833], "DEC" : [9.79806]})
 #print(file_list)
 # LB using DESI code and editing for this use
@@ -169,35 +135,46 @@ def findsweep(objs,files):
             sweepfiles.append(i)
      
     
-    
+# LB reading in the file 
 findsweep(bothh,file_list)
-print(sweepfiles)
-print(sweepfiles[0])
 objs1 = Table.read(sweepfiles[0], format='fits', unit_parse_strict='silent')
 #print(objs1)
 RA1 = objs1["RA"]
 Dec1 = objs1["DEC"]
 
+# LB finding the index of the object in the sweep file, Eliza and Josh showed me this
 PG1633_099A = SkyCoord('16:35:26', '+09:47:53', unit=(u.hourangle, u.degree))
 sweep_objects = SkyCoord(RA1, Dec1, unit=(u.degree, u.degree))
-
-
 separations = PG1633_099A.separation(sweep_objects)
-index = separations.argmin()
-G = objs1["FLUX_G"][index]
-R = objs1["FLUX_R"][index]
-Z = objs1["FLUX_Z"][index]
+ix = separations.argmin()
+
+# LB finding the flux of PG1633_099A
+G = objs1["FLUX_G"][ix]
+R = objs1["FLUX_R"][ix]
+Z = objs1["FLUX_Z"][ix]
+W1 = objs1["FLUX_W1"][ix]
+W2 = objs1["FLUX_W2"][ix]
+W3 = objs1["FLUX_W3"][ix]
+W4 = obs1["FLUX_W4"][ix]
+
+
+# LB converting flux to magnitude
 print(G)
 gm = 22.5 - 2.5 * np.log10(G)
 rm = 22.5 - 2.5 * np.log10(R)
 zm = 22.5 - 2.5 * np.log10(Z)
-print(gm)
-print(rm)
-print(zm)
+w1m = 22.5 - 2.5 * np.log10(W1)
+w2m = 22.5 - 2.5 * np.log10(W2)
+w3m = 22.5 - 2.5 * np.log10(W3)
+w4m = 22.5 - 2.5 * np.log10(W4)
 
-
-# In[ ]:
-
-
-
-
+print(f'The g magnitude is {gm}')
+print(f'The r magnitude is {rm}')
+print(f'The z magnitude is {zm}')
+print('They somewhat agree with the Navigate values')
+      
+print(f'The W1 magnitude is {w1m}')
+print(f'The W2 magnitude is {w2m}')
+print(f'The W3 magnitude is {w3m}')
+print(f'The W4 magnitude is {w4m}')
+print('Not detected in W4 band')
