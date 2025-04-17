@@ -266,7 +266,7 @@ print('Corr')
 print((corr))
 
 print(np.argmin(corr))
-print('5 & 6 are most correlated')
+print('6 & 7 are most correlated')
 
 #print(min(anticorr))
 # for i in range(len(covmatrix)):
