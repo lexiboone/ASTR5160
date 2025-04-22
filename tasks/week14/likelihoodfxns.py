@@ -29,6 +29,39 @@ def compute_lnlikelihood(m,b):
     Will return -np.inf for b less than 0 or larger than 8 (values are outside of m,b space we 
     want to sample)
     """
+    file = glob.glob('/d/scratch/ASTR5160/week13/line.data')[0]
+
+    # Reading in file
+
+    df = pd.read_csv(file, delim_whitespace=True) # For tab-separated data
+    #print(df)
+    #print(df[0])
+    # print(df.columns)
+
+    x0 = np.array([df['#x']])
+    # print(x0)
+    x1 = np.array([df['0.5']])
+    x2 = np.array([df['1.5']])
+    x3 = np.array([df['2.5']])
+    x4 = np.array([df['3.5']])
+    x5 = np.array([df['4.5']])
+    x6 = np.array([df['5.5']])
+    x7 = np.array([df['6.5']])
+    x8 = np.array([df['7.5']])
+    x9 = np.array([df['8.5']])
+    x_bins = [x0,x1,x2,x3,x4,x5,x6,x7,x8,x9]
+    x_bins_names = ['x0','x1','x2','x3','x4','x5','x6','x7','x8','x9']
+    O = []
+    vara = []
+    stda =[]
+    # finding mean and variance and std
+    for i in range(len(x_bins)):
+        mean = np.mean(x_bins[i])
+        var = np.var(x_bins[i], ddof = 1)
+        std = np.std(x_bins[i], ddof=1)
+        O.append(mean)
+        vara.append(var)
+        stda.append(std)
     x = np.arange(0.5,10,1)
     yact = O
     E = x*m + b
@@ -57,6 +90,39 @@ def compute_lnpp(m,b):
     Will return -np.inf for b less than 0 or larger than 8 (values are outside of m,b space we 
     want to sample)
     """
+    file = glob.glob('/d/scratch/ASTR5160/week13/line.data')[0]
+
+    # Reading in file
+
+    df = pd.read_csv(file, delim_whitespace=True) # For tab-separated data
+    #print(df)
+    #print(df[0])
+    # print(df.columns)
+
+    x0 = np.array([df['#x']])
+    # print(x0)
+    x1 = np.array([df['0.5']])
+    x2 = np.array([df['1.5']])
+    x3 = np.array([df['2.5']])
+    x4 = np.array([df['3.5']])
+    x5 = np.array([df['4.5']])
+    x6 = np.array([df['5.5']])
+    x7 = np.array([df['6.5']])
+    x8 = np.array([df['7.5']])
+    x9 = np.array([df['8.5']])
+    x_bins = [x0,x1,x2,x3,x4,x5,x6,x7,x8,x9]
+    x_bins_names = ['x0','x1','x2','x3','x4','x5','x6','x7','x8','x9']
+    O = []
+    vara = []
+    stda =[]
+    # finding mean and variance and std
+    for i in range(len(x_bins)):
+        mean = np.mean(x_bins[i])
+        var = np.var(x_bins[i], ddof = 1)
+        std = np.std(x_bins[i], ddof=1)
+        O.append(mean)
+        vara.append(var)
+        stda.append(std)
     x = np.arange(0.5,10,1)
     yact = O
     E = x*m + b
