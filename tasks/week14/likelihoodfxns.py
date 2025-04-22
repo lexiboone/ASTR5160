@@ -127,7 +127,6 @@ def MH_MCMCchain(m, b, iterations, stepsize):
         lnR = compute_lnpp(updatedm,updatedb) - compute_lnpp(m,b)
         R = np.exp(lnR)
 
-        # EAF - Determining if R is 
         if R > 1:
             # LB always accept
             slopes.append(updatedm)
