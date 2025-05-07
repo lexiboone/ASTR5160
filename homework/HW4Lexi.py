@@ -91,45 +91,6 @@ def crossmatchrevised(matching_radius, filenames, max_rband, objs_table):
     return matches, FIRSTmatches, stars
 
 
-# def isitstar(g_z, r_W1):
-#     """
-#     Parameters:
-#     ------------
-#     g_z (np.array) - g - z magnitude of object
-#     r_W1 (np.array) - r - W1 magnitude of object
-
-#     Returns:
-#     ---------
-#     (boolean) - True if star, False if quasar
-
-#     Note:
-#     -----
-#     This is not perfect, there are some outliers on both sides.
-#     However, this does account for a majority of the stars and quasar
-#     classifications.
-#     """
-
-#     b = -1.2
-#     m = 0.8
-#     x = np.linspace(-7, 7, 10000)
-#     divide = m * x + b
-
-#     if r_W1 > divide.all() and g_z < x.all():
-#         return False
-#     else: 
-#         return True
-
-# def determine_cuts(filename):
-#     file = glob.glob(filename)[0]
-#     data = fits.open(file, memmap=True)[1].data
-#     header = fits.open(file, memmap=True)[0].header
-#     objs_table = Table.read(file, memmap=True)
-#     #print(objs_table.colnames)
-#     #print(header)
-#     GMAG = data['GMAG']
-#     #print(data)
-
-
 def splendid_function(Table):
     """Classifies quasars in an astropy table
     
