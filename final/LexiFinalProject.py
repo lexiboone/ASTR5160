@@ -351,8 +351,7 @@ def fitting_emcee_quad(filename, a2_true, a1_true, a0_true, steps):
     print(f"a1 = {a1fit:.3f} ± ^{qa1[0]:.3f}_{qa1[1]:.3f}") 
     print(f"a0 = {a0fit:.3f} ± ^{qa0[0]:.3f}_{qa0[1]:.3f}")
 
-# fitting_emcee_linear('/d/scratch/ASTR5160/final/dataxy.fits', -0.7, 1, 10000)
-# fitting_emcee_quad('/d/scratch/ASTR5160/final/dataxy.fits', 0.7, -2, 8, 10000)
+ 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # LB adding argument of a file path to argparse so when read a filepath at the CL it can do an MCMC fit using linear and quadratic models
