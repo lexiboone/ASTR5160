@@ -15,6 +15,7 @@ from scipy.optimize import minimize
 import math 
 #from IPython.display import display, Math
 import argparse
+from argparse import ArgumentParser
 
 # LB all functions below were used from the emcee tutorial fitting a model to data https://emcee.readthedocs.io/en/stable/tutorials/line/
 
@@ -355,14 +356,14 @@ def fitting_emcee_quad(filename, a2_true, a1_true, a0_true, steps):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # LB adding argument of a file path to argparse so when read a filepath at the CL it can do an MCMC fit using linear and quadratic models
-    parser.add_argument("filepath", type=str, help="What is the full path to the fits file you want to fit a model to")
-    args = parser.parse_args()
-    FILEPATH = args.filepath
+    ap = ArgumentParser(description='Fits a linear and quadratic line to data using the emcee package')
+    args = ap.parse_args()
+    #FILEPATH = args.filepath
 
     # LB running the functions for both the quadratic and linear fit using the file path to data
     # LB edit this if want to change starting point or number of steps
-    fitting_emcee_linear(FILEPATH, -0.7, 1, 10000)
-    fitting_emcee_quad(FILEPATH, 0.7, -2, 8, 10000)
+    fitting_emcee_linear('/d/scratch/ASTR5160/final/dataxy.fits', -0.7, 1, 10000)
+    fitting_emcee_quad('/d/scratch/ASTR5160/final/dataxy.fits', 0.7, -2, 8, 10000)
     print('Looking at the poseriors for a2, a quadratic fit is warranted, though not by much. Since the a2 value is small, but still does not encompass 0 when accounting for error associated with the 16th and 84th percentiles, we cannot say that the quadratic fit is not needed, even though the posteriors do have some overlap with 0.')
     print('Therefore, we are justified in using a quadratic fit even though the linear fit is not too bad.')
     print('Visually, I think the quadratic fit looks to fit the data bettter.')
